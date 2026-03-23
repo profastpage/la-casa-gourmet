@@ -1,20 +1,37 @@
-```html
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Casona Gourmet | Exclusive Dining</title>
-    <meta name="description" content="Reserva tu experiencia gastronómica premium en Lima.">
+    <title>La Casona Gourmet | Alta Cocina Peruana - Reservas Online</title>
+    <meta name="description" content="Reserva tu experiencia gastronómica premium en Lima. Alta cocina peruana con técnicas francesas. Sistema directo de reservas vía WhatsApp.">
+    <meta name="keywords" content="restaurante lima, alta cocina, comida peruana, reservas restaurante, ceviche, lomo saltado, fine dining">
+    <meta name="author" content="Fast Page Pro">
     
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lacasagourmet.netlify.app/">
+    <meta property="og:title" content="La Casona Gourmet | Alta Cocina Peruana">
+    <meta property="og:description" content="Reserva tu experiencia gastronómica premium en Lima. Sistema directo de reservas vía WhatsApp.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="La Casona Gourmet | Alta Cocina Peruana">
+    <meta name="twitter:description" content="Reserva tu experiencia gastronómica premium en Lima.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
@@ -29,10 +46,14 @@
                         'charcoal': '#121212',
                         'slate': '#1e1e1e',
                         'gold': {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
                             400: '#eab308',
                             500: '#ca8a04',
                             600: '#a16207',
-                            100: '#fef9c3',
+                            700: '#854d0e',
                         },
                         'stone': {
                             50: '#fafaf9',
@@ -41,10 +62,28 @@
                             300: '#d6d3d1',
                             400: '#a8a29e',
                             500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
                         }
                     },
                     spacing: {
                         '128': '32rem',
+                        '144': '36rem',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        }
                     }
                 }
             }
@@ -60,50 +99,80 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ca8a04, #eab308, #ca8a04);
+            z-index: 100;
+            transition: width 0.1s ease;
+        }
+
         /* Utilities */
         .glass-panel {
             background: rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .input-field {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .input-field:focus {
             background: rgba(255, 255, 255, 0.05);
             border-color: #ca8a04;
             outline: none;
+            box-shadow: 0 0 0 4px rgba(202, 138, 4, 0.1);
         }
 
         /* Animations */
         .fade-in-up {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .fade-in-up.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        .fade-in-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         .stagger-1 { transition-delay: 100ms; }
         .stagger-2 { transition-delay: 200ms; }
         .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ca8a04, #a16207); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #eab308, #ca8a04); }
 
         /* Image Zoom */
         .img-container { overflow: hidden; }
         .img-zoom { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .group:hover .img-zoom { transform: scale(1.05); }
+        .group:hover .img-zoom { transform: scale(1.1); }
 
         /* Image Loading */
         img {
@@ -119,76 +188,232 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+            animation: pulse-slow 2s infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* Parallax Effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Card Hover Effects */
+        .menu-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(202, 138, 4, 0.15);
+        }
+
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Masonry Gallery */
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-auto-rows: 200px;
+            gap: 16px;
+        }
+        .masonry-item:nth-child(1) { grid-row: span 2; grid-column: span 2; }
+        .masonry-item:nth-child(4) { grid-column: span 2; }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: fade-in-scale 0.3s ease;
+        }
+
+        /* Stats Counter Animation */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Menu Badge */
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(8px);
+        }
+        .badge-best {
+            background: rgba(202, 138, 4, 0.9);
+            color: #000;
+        }
+        .badge-new {
+            background: rgba(34, 197, 94, 0.9);
+            color: #fff;
+        }
+        .badge-spicy {
+            background: rgba(239, 68, 68, 0.9);
+            color: #fff;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-black">
 
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 lg:px-12 border-b border-white/5">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 px-6 lg:px-12 border-b border-white/5">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="text-xl lg:text-2xl font-serif font-bold text-white tracking-tight z-50">
-                La Casona<span class="text-gold-500">.</span>
+            <a href="#" class="text-xl lg:text-2xl font-serif font-bold text-white tracking-tight z-50 group">
+                La Casona<span class="text-gold-500 group-hover:text-gold-400 transition-colors">.</span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#menu" class="text-xs font-medium text-stone-400 hover:text-white transition-colors uppercase tracking-widest">Menú</a>
-                <a href="#experience" class="text-xs font-medium text-stone-400 hover:text-white transition-colors uppercase tracking-widest">Experiencia</a>
-                <a href="#reviews" class="text-xs font-medium text-stone-400 hover:text-white transition-colors uppercase tracking-widest">Reseñas</a>
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="#menu" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                    Menú
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#experience" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                    Experiencia
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#chef" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                    Chef
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#gallery" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                    Galería
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#reviews" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                    Reseñas
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
+                </a>
             </div>
 
-            <a href="#reserve" class="hidden md:inline-flex items-center justify-center px-6 py-2.5 bg-white text-black text-xs font-bold rounded-full hover:bg-stone-200 transition-all uppercase tracking-widest">
+            <a href="#reserve" class="hidden md:inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-gold-600 to-gold-500 text-white text-xs font-bold rounded-full hover:from-gold-500 hover:to-gold-400 transition-all uppercase tracking-widest shadow-lg shadow-gold-500/25 btn-glow">
                 Reservar Mesa
             </a>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white z-50 focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50 focus:outline-none group">
+                <svg class="w-6 h-6 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-obsidian z-40 transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-8 md:hidden">
-            <a href="#menu" class="text-2xl font-serif text-white mobile-link">Menú</a>
-            <a href="#experience" class="text-2xl font-serif text-white mobile-link">Experiencia</a>
-            <a href="#reserve" class="text-2xl font-serif text-gold-500 mobile-link">Reservar</a>
+        <div id="mobile-menu" class="fixed inset-0 bg-gradient-to-b from-obsidian via-charcoal to-obsidian z-40 transform translate-x-full transition-transform duration-500 flex flex-col items-center justify-center space-y-8 md:hidden">
+            <a href="#menu" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Menú</a>
+            <a href="#experience" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Experiencia</a>
+            <a href="#chef" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Chef</a>
+            <a href="#gallery" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Galería</a>
+            <a href="#reserve" class="text-3xl font-serif text-gold-500 mobile-link">Reservar</a>
         </div>
     </nav>
 
-    <!-- Hero Section - Full Bleed Michelin Quality -->
+    <!-- Hero Section - Full Bleed with Parallax -->
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div class="absolute inset-0 z-0">
-            <!-- Premium Michelin-style food photography -->
-            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2574&auto=format&fit=crop" 
-                 alt="Fine Dining Experience" 
+        <div class="absolute inset-0 z-0 parallax">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2574&auto=format&fit=crop"
+                 alt="Fine Dining Experience"
                  class="w-full h-full object-cover"
                  onload="this.classList.add('loaded')"
                  onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16549766b?q=80&w=2070&auto=format&fit=crop'">
-            <!-- Dark overlay for contrast -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-obsidian"></div>
-            <!-- Vignette effect -->
-            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-obsidian"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.8)_100%)]"></div>
         </div>
 
-        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-white/20 bg-black/40 backdrop-blur-md mb-8 fade-in-up">
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-gold-500/30 bg-black/40 backdrop-blur-md mb-8 fade-in-up shadow-lg shadow-gold-500/10">
                 <span class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span>
-                <span class="text-[10px] font-bold text-white uppercase tracking-widest">Reservas Abiertas</span>
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-widest">Reservas Abiertas 2024</span>
             </div>
-            
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-white mb-8 leading-[1.1] fade-in-up stagger-1">
-                Alta cocina <br/> <span class="italic text-stone-300">sin intermediarios.</span>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-[1.05] fade-in-up stagger-1">
+                Alta cocina <br/> <span class="italic gradient-text">sin intermediarios.</span>
             </h1>
-            
-            <p class="text-lg md:text-xl text-stone-300 mb-12 max-w-xl mx-auto font-light leading-relaxed fade-in-up stagger-2">
-                Sistema directo de reservas y pedidos. Sin comisiones de plataforma. Atención prioritaria vía WhatsApp.
+
+            <p class="text-lg md:text-xl text-stone-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed fade-in-up stagger-2">
+                Sistema directo de reservas y pedidos. Sin comisiones de plataforma. 
+                <span class="text-gold-400 font-medium">Atención prioritaria vía WhatsApp.</span>
             </p>
-            
+
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in-up stagger-3">
-                <a href="#reserve" class="w-full sm:w-auto px-8 py-4 bg-gold-600 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-gold-500 transition-all shadow-[0_0_30px_-10px_rgba(202,138,4,0.4)]">
+                <a href="#reserve" class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-gold-600 to-gold-500 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:from-gold-500 hover:to-gold-400 transition-all shadow-[0_0_40px_-10px_rgba(202,138,4,0.5)] btn-glow">
                     Reservar Ahora
                 </a>
-                <a href="#menu" class="w-full sm:w-auto px-8 py-4 border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/10 transition-all backdrop-blur-sm">
+                <a href="#menu" class="w-full sm:w-auto px-10 py-4 border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/10 hover:border-gold-500/50 transition-all backdrop-blur-sm">
                     Ver Carta Digital
                 </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="mt-16 flex flex-wrap justify-center items-center gap-8 fade-in-up stagger-4">
+                <div class="flex items-center space-x-2 text-stone-400">
+                    <svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span class="text-xs">4.9/5 en Google</span>
+                </div>
+                <div class="flex items-center space-x-2 text-stone-400">
+                    <svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span class="text-xs">Confirmación Inmediata</span>
+                </div>
+                <div class="flex items-center space-x-2 text-stone-400">
+                    <svg class="w-5 h-5 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+                    <span class="text-xs">+51 919 662 011</span>
+                </div>
             </div>
         </div>
 
@@ -199,14 +424,52 @@
     </header>
 
     <!-- Trust Strip -->
-    <section class="border-y border-white/5 bg-charcoal/50 backdrop-blur-sm py-12">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="border-y border-white/5 bg-charcoal/50 backdrop-blur-sm py-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-gold-500/5 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
             <p class="text-center text-xs font-bold text-stone-500 uppercase tracking-widest mb-8">Reconocido por</p>
-            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                <span class="text-xl font-serif font-bold text-white">VOGUE</span>
-                <span class="text-xl font-serif font-bold text-white">FORBES</span>
-                <span class="text-xl font-serif font-bold text-white">Michelin</span>
-                <span class="text-xl font-serif font-bold text-white">Condé Nast</span>
+            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24">
+                <span class="text-xl font-serif font-bold text-stone-600 hover:text-white transition-colors duration-500">VOGUE</span>
+                <span class="text-xl font-serif font-bold text-stone-600 hover:text-white transition-colors duration-500">FORBES</span>
+                <span class="text-xl font-serif font-bold text-stone-600 hover:text-white transition-colors duration-500">Michelin</span>
+                <span class="text-xl font-serif font-bold text-stone-600 hover:text-white transition-colors duration-500">Condé Nast</span>
+                <span class="text-xl font-serif font-bold text-stone-600 hover:text-white transition-colors duration-500">Traveler</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-obsidian border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 fade-in-up stagger-1">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Reserva Instantánea</h3>
+                    <p class="text-stone-500 text-sm">Confirmación en menos de 2 minutos vía WhatsApp.</p>
+                </div>
+                <div class="text-center p-6 fade-in-up stagger-2">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Sin Comisiones</h3>
+                    <p class="text-stone-500 text-sm">Reserva directa sin intermediarios ni recargos.</p>
+                </div>
+                <div class="text-center p-6 fade-in-up stagger-3">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Ingredientes Frescos</h3>
+                    <p class="text-stone-500 text-sm">Productos locales seleccionados diariamente.</p>
+                </div>
+                <div class="text-center p-6 fade-in-up stagger-4">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
+                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h3 class="text-white font-bold mb-2">Atención Premium</h3>
+                    <p class="text-stone-500 text-sm">Experiencia personalizada de principio a fin.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -214,108 +477,232 @@
     <!-- Menu Section -->
     <section id="menu" class="py-24 md:py-32 bg-obsidian">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="flex justify-between items-end mb-16 fade-in-up">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 fade-in-up">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-serif font-medium text-white mb-2">Signature Dishes</h2>
-                    <p class="text-stone-500 font-light">Nuestros platos más solicitados.</p>
+                    <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Nuestra Carta</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-4">Signature Dishes</h2>
+                    <p class="text-stone-500 font-light max-w-md">Nuestros platos más solicitados, preparados con ingredientes de primera calidad.</p>
                 </div>
-                <a href="#" class="hidden md:flex items-center text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors">
-                    Ver menú completo <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                <a href="#" class="hidden md:flex items-center text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors group mt-6 md:mt-0">
+                    Ver menú completo 
+                    <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Item 1 -->
-                <div class="group fade-in-up stagger-1">
-                    <div class="relative aspect-[4/3] mb-6 img-container rounded-lg cursor-pointer" onclick="orderItem('Ceviche Clásico')">
-                        <img src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?q=80&w=2070&auto=format&fit=crop" 
-                             class="w-full h-full object-cover img-zoom" 
-                             alt="Ceviche"
+                <div class="menu-card glass-card rounded-2xl overflow-hidden fade-in-up stagger-1 group cursor-pointer" onclick="orderItem('Ceviche Clásico')">
+                    <div class="relative aspect-[4/3] img-container">
+                        <img src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?q=80&w=2070&auto=format&fit=crop"
+                             class="w-full h-full object-cover img-zoom"
+                             alt="Ceviche Clásico"
                              onload="this.classList.add('loaded')"
                              onerror="this.style.background='#1a1a1a'">
-                        <div class="absolute top-4 right-4 bg-black/80 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-widest border border-white/10">
-                            Best Seller
+                        <span class="badge badge-best">Best Seller</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Ceviche Clásico</h3>
+                            <span class="text-lg font-bold text-gold-500">S/ 55</span>
                         </div>
+                        <p class="text-stone-500 text-sm font-light mb-4">Pescado del día, leche de tigre, camote glaseado, choclo tostado.</p>
+                        <button class="w-full py-3 bg-gradient-to-r from-gold-600/20 to-gold-500/10 border border-gold-500/30 text-gold-400 rounded-lg text-xs font-bold uppercase tracking-widest hover:from-gold-600/30 hover:to-gold-500/20 transition-all flex items-center justify-center gap-2 group-hover:border-gold-500/50">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            Pedir por WhatsApp
+                        </button>
                     </div>
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-serif text-white">Ceviche Clásico</h3>
-                        <span class="text-lg font-medium text-gold-500">S/ 55</span>
-                    </div>
-                    <p class="text-stone-500 text-sm font-light mb-4 line-clamp-2">Pescado del día, leche de tigre, camote glaseado.</p>
-                    <button onclick="orderItem('Ceviche Clásico')" class="w-full py-3 bg-white/5 border border-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
-                        Pedir por WhatsApp
-                    </button>
                 </div>
 
                 <!-- Item 2 -->
-                <div class="group fade-in-up stagger-2">
-                    <div class="relative aspect-[4/3] mb-6 img-container rounded-lg cursor-pointer" onclick="orderItem('Lomo Saltado')">
+                <div class="menu-card glass-card rounded-2xl overflow-hidden fade-in-up stagger-2 group cursor-pointer" onclick="orderItem('Lomo Saltado')">
+                    <div class="relative aspect-[4/3] img-container">
                         <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=2070&auto=format&fit=crop"
                              class="w-full h-full object-cover img-zoom"
                              alt="Lomo Saltado"
                              onload="this.classList.add('loaded')"
                              onerror="this.style.background='#1a1a1a'">
+                        <span class="badge badge-new">Popular</span>
                     </div>
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-serif text-white">Lomo Saltado</h3>
-                        <span class="text-lg font-medium text-gold-500">S/ 68</span>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Lomo Saltado</h3>
+                            <span class="text-lg font-bold text-gold-500">S/ 68</span>
+                        </div>
+                        <p class="text-stone-500 text-sm font-light mb-4">Lomo fino, wok, papas nativas, arroz graneado, ají amarillo.</p>
+                        <button class="w-full py-3 bg-gradient-to-r from-gold-600/20 to-gold-500/10 border border-gold-500/30 text-gold-400 rounded-lg text-xs font-bold uppercase tracking-widest hover:from-gold-600/30 hover:to-gold-500/20 transition-all flex items-center justify-center gap-2 group-hover:border-gold-500/50">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            Pedir por WhatsApp
+                        </button>
                     </div>
-                    <p class="text-stone-500 text-sm font-light mb-4 line-clamp-2">Lomo fino, wok, papas nativas, arroz graneado.</p>
-                    <button onclick="orderItem('Lomo Saltado')" class="w-full py-3 bg-white/5 border border-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
-                        Pedir por WhatsApp
-                    </button>
                 </div>
 
                 <!-- Item 3 -->
-                <div class="group fade-in-up stagger-3">
-                    <div class="relative aspect-[4/3] mb-6 img-container rounded-lg cursor-pointer" onclick="orderItem('Pisco Sour')">
-                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1974&auto=format&fit=crop" 
-                             class="w-full h-full object-cover img-zoom" 
+                <div class="menu-card glass-card rounded-2xl overflow-hidden fade-in-up stagger-3 group cursor-pointer" onclick="orderItem('Pisco Sour')">
+                    <div class="relative aspect-[4/3] img-container">
+                        <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1974&auto=format&fit=crop"
+                             class="w-full h-full object-cover img-zoom"
                              alt="Pisco Sour"
                              onload="this.classList.add('loaded')"
                              onerror="this.style.background='#1a1a1a'">
                     </div>
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-serif text-white">Pisco Sour</h3>
-                        <span class="text-lg font-medium text-gold-500">S/ 35</span>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Pisco Sour</h3>
+                            <span class="text-lg font-bold text-gold-500">S/ 35</span>
+                        </div>
+                        <p class="text-stone-500 text-sm font-light mb-4">Pisco Quebranta, limón sutil, amargo de angostura, clara de huevo.</p>
+                        <button class="w-full py-3 bg-gradient-to-r from-gold-600/20 to-gold-500/10 border border-gold-500/30 text-gold-400 rounded-lg text-xs font-bold uppercase tracking-widest hover:from-gold-600/30 hover:to-gold-500/20 transition-all flex items-center justify-center gap-2 group-hover:border-gold-500/50">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            Pedir por WhatsApp
+                        </button>
                     </div>
-                    <p class="text-stone-500 text-sm font-light mb-4 line-clamp-2">Pisco Quebranta, limón sutil, amargo de angostura.</p>
-                    <button onclick="orderItem('Pisco Sour')" class="w-full py-3 bg-white/5 border border-white/10 text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center justify-center gap-2">
-                        Pedir por WhatsApp
-                    </button>
                 </div>
+            </div>
+
+            <div class="mt-12 text-center md:hidden">
+                <a href="#" class="inline-flex items-center text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors">
+                    Ver menú completo 
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-24 bg-charcoal border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+    <section id="experience" class="py-24 md:py-32 bg-charcoal border-y border-white/5 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
             <div class="order-2 lg:order-1 fade-in-up">
-                <h4 class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs mb-6">La Experiencia</h4>
-                <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mb-8 leading-tight">Diseñado para <br>el disfrute.</h2>
-                <div class="space-y-8 text-stone-400 font-light leading-relaxed">
-                    <p>
+                <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">La Experiencia</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-8 leading-tight">Diseñado para <br><span class="gradient-text">el disfrute.</span></h2>
+                <div class="space-y-6 text-stone-400 font-light leading-relaxed">
+                    <p class="text-base">
                         No somos solo un restaurante; somos un destino. Ubicados en el corazón de San Isidro, ofrecemos un santuario culinario donde el ruido de la ciudad se desvanece.
                     </p>
-                    <div class="grid grid-cols-2 gap-8 pt-4">
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+                                Chef Ejecutivo
+                            </h5>
+                            <p class="text-sm">Técnicas francesas con alma peruana. 15+ años de experiencia.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h5 class="text-white font-bold mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                Bodega Premium
+                            </h5>
+                            <p class="text-sm">Más de 50 etiquetas exclusivas. Sommelier certificado.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-8 pt-6">
                         <div>
-                            <h5 class="text-white font-bold mb-2">Chef Ejecutivo</h5>
-                            <p class="text-sm">Técnicas francesas con alma peruana.</p>
+                            <p class="text-3xl font-bold text-white stat-number" data-target="15">0</p>
+                            <p class="text-xs text-stone-500 uppercase tracking-widest">Años Exp.</p>
                         </div>
                         <div>
-                            <h5 class="text-white font-bold mb-2">Bodega Premium</h5>
-                            <p class="text-sm">Más de 50 etiquetas exclusivas.</p>
+                            <p class="text-3xl font-bold text-white stat-number" data-target="50">0</p>
+                            <p class="text-xs text-stone-500 uppercase tracking-widest">Etiquetas</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-white stat-number" data-target="1000">0</p>
+                            <p class="text-xs text-stone-500 uppercase tracking-widest">Clientes/mes</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="order-1 lg:order-2 fade-in-up stagger-2">
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gold-500/20 blur-3xl rounded-full opacity-20"></div>
-                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1974&auto=format&fit=crop" 
-                         class="relative rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" 
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gold-500/30 to-transparent blur-2xl rounded-full opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=1974&auto=format&fit=crop"
+                         class="relative rounded-2xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700"
                          alt="Chef plating"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.style.background='#1a1a1a'">
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gold-500/20 rounded-full blur-2xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section id="chef" class="py-24 md:py-32 bg-obsidian">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in-up">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent rounded-2xl"></div>
+                        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=1968&auto=format&fit=crop"
+                             class="relative rounded-2xl shadow-2xl w-full"
+                             alt="Chef Ejecutivo"
+                             onload="this.classList.add('loaded')"
+                             onerror="this.style.background='#1a1a1a'">
+                        <div class="absolute -bottom-4 -right-4 bg-gold-600 text-white px-6 py-3 rounded-lg shadow-lg">
+                            <p class="text-xs font-bold uppercase tracking-widest">15+ Años</p>
+                            <p class="text-xs opacity-80">Experiencia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in-up stagger-2">
+                    <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Nuestro Chef</span>
+                    <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-6">Carlos Mendoza</h2>
+                    <p class="text-stone-400 font-light leading-relaxed mb-6">
+                        Con formación en Le Cordon Bleu París y experiencia en restaurantes Michelin, Carlos fusiona técnicas europeas con los sabores ancestrales peruanos.
+                    </p>
+                    <p class="text-stone-400 font-light leading-relaxed mb-8">
+                        "Cada plato cuenta una historia. Mi misión es transportar a nuestros comensales a través de un viaje culinario que honra nuestras raíces mientras abraza la innovación."
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-stone-400">Le Cordon Bleu</div>
+                        <div class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-stone-400">Michelin Experience</div>
+                        <div class="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs text-stone-400">Cocina Peruana</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-charcoal border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 fade-in-up">
+                <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Galería</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-4">Momentos Capturados</h2>
+                <p class="text-stone-500 font-light max-w-md mx-auto">Cada detalle en La Casona está pensado para crear experiencias inolvidables.</p>
+            </div>
+            <div class="masonry-grid">
+                <div class="masonry-item fade-in-up stagger-1 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Restaurant Interior"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.style.background='#1a1a1a'">
+                </div>
+                <div class="masonry-item fade-in-up stagger-2 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Wine"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.style.background='#1a1a1a'">
+                </div>
+                <div class="masonry-item fade-in-up stagger-3 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Plating"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.style.background='#1a1a1a'">
+                </div>
+                <div class="masonry-item fade-in-up stagger-2 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=2070&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Terrace"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.style.background='#1a1a1a'">
+                </div>
+                <div class="masonry-item fade-in-up stagger-3 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=2070&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Cocktails"
                          onload="this.classList.add('loaded')"
                          onerror="this.style.background='#1a1a1a'">
                 </div>
@@ -323,33 +710,98 @@
         </div>
     </section>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white hover:text-gold-500 transition-colors z-10" onclick="closeLightbox()">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <img id="lightbox-img" src="" alt="Gallery image">
+    </div>
+
+    <!-- Location & Hours Section -->
+    <section class="py-24 md:py-32 bg-obsidian">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="fade-in-up">
+                    <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Ubicación</span>
+                    <h2 class="text-3xl md:text-4xl font-serif font-medium text-white mt-2 mb-8">Visítanos</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center flex-shrink-0 border border-gold-500/20">
+                                <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Dirección</h4>
+                                <p class="text-stone-400 text-sm">Av. Principal 123, San Isidro<br>Lima, Perú</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center flex-shrink-0 border border-gold-500/20">
+                                <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Horario</h4>
+                                <p class="text-stone-400 text-sm">Mar - Dom: 12:00 PM - 11:00 PM<br>Lunes: Cerrado</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center flex-shrink-0 border border-gold-500/20">
+                                <svg class="w-6 h-6 text-gold-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Reservas</h4>
+                                <p class="text-stone-400 text-sm">+51 919 662 011<br>reservas@lacasagourmet.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in-up stagger-2">
+                    <div class="relative h-80 lg:h-full rounded-2xl overflow-hidden border border-white/10">
+                        <div class="absolute inset-0 bg-gradient-to-br from-gold-500/10 to-transparent"></div>
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.699814056707!2d-77.03652568561728!3d-12.097062991469616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5b9e07e0b%3A0x6c2c5a0e0e0e0e0e!2sSan%20Isidro%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890"
+                            class="w-full h-full grayscale hover:grayscale-0 transition-all duration-500"
+                            style="border:0; filter: invert(90%) hue-rotate(180deg);"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Reservation System -->
-    <section id="reserve" class="py-24 md:py-32 bg-obsidian relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-charcoal to-transparent opacity-50 pointer-events-none"></div>
+    <section id="reserve" class="py-24 md:py-32 bg-gradient-to-b from-obsidian to-charcoal relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold-500/5 to-transparent pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="max-w-3xl mx-auto px-6 relative z-10">
             <div class="text-center mb-12 fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-serif font-medium text-white mb-4">Reserva tu Mesa</h2>
+                <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Reservas</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-4">Reserva tu Mesa</h2>
                 <p class="text-stone-500 font-light">Confirmación inmediata vía WhatsApp. Sin esperas.</p>
             </div>
 
-            <div class="glass-panel p-8 md:p-10 rounded-2xl shadow-2xl fade-in-up stagger-2">
+            <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-2xl fade-in-up stagger-2 border border-white/10">
                 <form id="booking-form" onsubmit="handleBooking(event)" class="space-y-6">
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Fecha</label>
-                            <input type="date" id="date" required class="w-full input-field rounded-lg px-4 py-3 text-sm text-white">
+                            <input type="date" id="date" required class="w-full input-field rounded-xl px-4 py-4 text-sm text-white">
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Hora</label>
-                            <input type="time" id="time" required class="w-full input-field rounded-lg px-4 py-3 text-sm text-white">
+                            <input type="time" id="time" required class="w-full input-field rounded-xl px-4 py-4 text-sm text-white">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Personas</label>
-                            <select id="guests" class="w-full input-field rounded-lg px-4 py-3 text-sm text-white appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-right-4">
+                            <select id="guests" class="w-full input-field rounded-xl px-4 py-4 text-sm text-white appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-right-4">
                                 <option value="2">2 Personas</option>
                                 <option value="3">3 Personas</option>
                                 <option value="4">4 Personas</option>
@@ -359,7 +811,7 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Zona</label>
-                            <select id="zone" class="w-full input-field rounded-lg px-4 py-3 text-sm text-white appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-right-4">
+                            <select id="zone" class="w-full input-field rounded-xl px-4 py-4 text-sm text-white appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSI+PC9wb2x5bGluZT48L3N2Zz4=')] bg-no-repeat bg-right-4">
                                 <option value="Salón">Salón Principal</option>
                                 <option value="Terraza">Terraza</option>
                                 <option value="Privado">Salón Privado</option>
@@ -368,12 +820,12 @@
                     </div>
 
                     <div class="pt-4">
-                        <button type="submit" class="w-full bg-white text-black font-bold py-4 rounded-lg hover:bg-stone-200 transition-all transform active:scale-[0.98] flex items-center justify-center gap-3 uppercase tracking-widest text-xs shadow-lg">
+                        <button type="submit" class="w-full bg-gradient-to-r from-gold-600 to-gold-500 text-black font-bold py-5 rounded-xl hover:from-gold-500 hover:to-gold-400 transition-all transform active:scale-[0.98] flex items-center justify-center gap-3 uppercase tracking-widest text-xs shadow-lg shadow-gold-500/25 btn-glow">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                             Confirmar Disponibilidad
                         </button>
                         <p class="text-center text-[10px] text-stone-500 mt-4 flex items-center justify-center gap-1">
-                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-3 h-3 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                             Respuesta garantizada en &lt; 2 min
                         </p>
                     </div>
@@ -382,61 +834,62 @@
         </div>
     </section>
 
-    <!-- Reviews with Real Photos -->
+    <!-- Reviews Section -->
     <section id="reviews" class="py-24 bg-obsidian border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-serif font-medium text-white mb-4">Lo Que Dicen</h2>
+                <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Testimonios</span>
+                <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-4">Lo Que Dicen</h2>
                 <p class="text-stone-500 font-light">Experiencias reales de nuestros comensales.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Review 1 -->
-                <div class="p-8 border border-white/5 rounded-xl bg-charcoal/30 fade-in-up stagger-1">
-                    <div class="flex text-gold-500 mb-4 text-xs">★★★★★</div>
+                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent fade-in-up stagger-1 hover:border-gold-500/30 transition-colors">
+                    <div class="flex text-gold-500 mb-4 text-sm">★★★★★</div>
                     <p class="text-stone-300 text-sm font-light leading-relaxed mb-6">"La reserva fue instantánea. La comida es de otro mundo. Definitivamente el mejor lugar en Lima."</p>
                     <div class="flex items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop" 
-                             alt="Ana P." 
-                             class="w-10 h-10 rounded-full object-cover"
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
+                             alt="Ana P."
+                             class="w-12 h-12 rounded-full object-cover border-2 border-gold-500/30"
                              onload="this.classList.add('loaded')"
                              onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop'">
                         <div>
-                            <p class="text-xs font-bold text-white">Ana P.</p>
-                            <p class="text-[10px] text-stone-500">Cliente Verificada</p>
+                            <p class="text-sm font-bold text-white">Ana P.</p>
+                            <p class="text-xs text-stone-500">Cliente Verificada</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Review 2 -->
-                <div class="p-8 border border-white/5 rounded-xl bg-charcoal/30 fade-in-up stagger-2">
-                    <div class="flex text-gold-500 mb-4 text-xs">★★★★★</div>
+                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent fade-in-up stagger-2 hover:border-gold-500/30 transition-colors">
+                    <div class="flex text-gold-500 mb-4 text-sm">★★★★★</div>
                     <p class="text-stone-300 text-sm font-light leading-relaxed mb-6">"Atención impecable desde el WhatsApp hasta la mesa. El lomo saltado es obligatorio."</p>
                     <div class="flex items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" 
-                             alt="Carlos R." 
-                             class="w-10 h-10 rounded-full object-cover"
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+                             alt="Carlos R."
+                             class="w-12 h-12 rounded-full object-cover border-2 border-gold-500/30"
                              onload="this.classList.add('loaded')"
                              onerror="this.src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop'">
                         <div>
-                            <p class="text-xs font-bold text-white">Carlos R.</p>
-                            <p class="text-[10px] text-stone-500">Cliente Verificado</p>
+                            <p class="text-sm font-bold text-white">Carlos R.</p>
+                            <p class="text-xs text-stone-500">Cliente Verificado</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Review 3 -->
-                <div class="p-8 border border-white/5 rounded-xl bg-charcoal/30 fade-in-up stagger-3">
-                    <div class="flex text-gold-500 mb-4 text-xs">★★★★★</div>
+                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent fade-in-up stagger-3 hover:border-gold-500/30 transition-colors">
+                    <div class="flex text-gold-500 mb-4 text-sm">★★★★★</div>
                     <p class="text-stone-300 text-sm font-light leading-relaxed mb-6">"Ambiente sofisticado pero relajado. Perfecto para una cena de negocios o romántica."</p>
                     <div class="flex items-center gap-3">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop" 
-                             alt="María L." 
-                             class="w-10 h-10 rounded-full object-cover"
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop"
+                             alt="María L."
+                             class="w-12 h-12 rounded-full object-cover border-2 border-gold-500/30"
                              onload="this.classList.add('loaded')"
                              onerror="this.src='https://images.unsplash.com/photo-1554151228-14d9def656ec?q=80&w=200&auto=format&fit=crop'">
                         <div>
-                            <p class="text-xs font-bold text-white">María L.</p>
-                            <p class="text-[10px] text-stone-500">Cliente Verificada</p>
+                            <p class="text-sm font-bold text-white">María L.</p>
+                            <p class="text-xs text-stone-500">Cliente Verificada</p>
                         </div>
                     </div>
                 </div>
@@ -444,79 +897,96 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="py-24 bg-charcoal border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center mb-16 fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-serif font-medium text-white mb-4">Galería</h2>
-                <p class="text-stone-500 font-light">Momentos capturados en La Casona.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="col-span-2 row-span-2 fade-in-up stagger-1">
-                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop" 
-                         class="w-full h-full object-cover rounded-lg img-container group" 
-                         alt="Restaurant Interior"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.background='#1a1a1a'">
-                </div>
-                <div class="fade-in-up stagger-2">
-                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop"
-                         class="w-full h-48 object-cover rounded-lg img-container group"
-                         alt="Wine"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.background='#1a1a1a'">
-                </div>
-                <div class="fade-in-up stagger-3">
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop" 
-                         class="w-full h-48 object-cover rounded-lg img-container group" 
-                         alt="Plating"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.background='#1a1a1a'">
-                </div>
-                <div class="col-span-2 fade-in-up stagger-2">
-                    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=2070&auto=format&fit=crop" 
-                         class="w-full h-48 object-cover rounded-lg img-container group" 
-                         alt="Terrace"
-                         onload="this.classList.add('loaded')"
-                         onerror="this.style.background='#1a1a1a'">
-                </div>
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-r from-gold-600 to-gold-500 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6 fade-in-up">¿Listo para una experiencia inolvidable?</h2>
+            <p class="text-white/80 text-lg mb-8 fade-in-up stagger-1">Reserva tu mesa ahora y vive la alta cocina peruana en su máxima expresión.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in-up stagger-2">
+                <a href="#reserve" class="px-10 py-4 bg-black text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-black/80 transition-all shadow-xl">
+                    Reservar Mesa
+                </a>
+                <a href="https://wa.me/51919662011" target="_blank" class="px-10 py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/30 transition-all">
+                    Contactar por WhatsApp
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-black py-12 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <a href="#" class="text-xl font-serif font-bold text-white tracking-tight block mb-2">
-                    La Casona<span class="text-gold-500">.</span>
-                </a>
-                <p class="text-[10px] text-stone-500 uppercase tracking-widest">© 2024 Todos los derechos reservados.</p>
-                <p class="text-[10px] text-stone-500 mt-1">
-                    Diseño y desarrollo web por <a href="https://fastpagepro.com" target="_blank" class="text-gold-500 hover:text-gold-400 transition-colors">Fast Page Pro</a>
-                </p>
+    <footer class="bg-black py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#" class="text-2xl font-serif font-bold text-white tracking-tight block mb-4">
+                        La Casona<span class="text-gold-500">.</span>
+                    </a>
+                    <p class="text-stone-500 text-sm leading-relaxed max-w-md">
+                        Alta cocina peruana con técnicas francesas. Una experiencia gastronómica única en el corazón de San Isidro.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Enlaces</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#menu" class="text-stone-500 hover:text-gold-500 transition-colors text-sm">Menú</a></li>
+                        <li><a href="#experience" class="text-stone-500 hover:text-gold-500 transition-colors text-sm">Experiencia</a></li>
+                        <li><a href="#chef" class="text-stone-500 hover:text-gold-500 transition-colors text-sm">Chef</a></li>
+                        <li><a href="#gallery" class="text-stone-500 hover:text-gold-500 transition-colors text-sm">Galería</a></li>
+                        <li><a href="#reserve" class="text-stone-500 hover:text-gold-500 transition-colors text-sm">Reservas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Contacto</h4>
+                    <ul class="space-y-2 text-stone-500 text-sm">
+                        <li>+51 919 662 011</li>
+                        <li>reservas@lacasagourmet.com</li>
+                        <li>San Isidro, Lima</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="flex space-x-6">
-                <a href="#" class="text-stone-500 hover:text-white transition-colors text-xs uppercase tracking-widest">Instagram</a>
-                <a href="#" class="text-stone-500 hover:text-white transition-colors text-xs uppercase tracking-widest">Facebook</a>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-center md:text-left">
+                    <p class="text-[10px] text-stone-500 uppercase tracking-widest">© 2024 Todos los derechos reservados.</p>
+                    <p class="text-[10px] text-stone-500 mt-1">
+                        Diseño y desarrollo web por <a href="https://fastpagepro.com" target="_blank" class="text-gold-500 hover:text-gold-400 transition-colors font-medium">Fast Page Pro</a>
+                    </p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Instagram</a>
+                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Facebook</a>
+                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">TikTok</a>
+                </div>
             </div>
-
-            <a href="https://wa.me/51919662011" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gold-600 hover:text-white transition-all">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            </a>
         </div>
     </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/51919662011?text=🍽️%20*Hola%20La%20Casona!*%20Quisiera%20más%20información." target="_blank" 
+       class="whatsapp-float w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center shadow-lg shadow-green-500/30 hover:shadow-green-500/50 transition-all z-50 group">
+        <svg class="w-8 h-8 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
     <script>
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        });
+
         // Navbar Scroll Effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.classList.add('bg-obsidian/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                navbar.classList.add('bg-obsidian/95', 'backdrop-blur-xl', 'shadow-lg', 'py-4');
                 navbar.classList.remove('py-6', 'border-white/5');
             } else {
-                navbar.classList.remove('bg-obsidian/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                navbar.classList.remove('bg-obsidian/95', 'backdrop-blur-xl', 'shadow-lg', 'py-4');
                 navbar.classList.add('py-6', 'border-white/5');
             }
         });
@@ -548,13 +1018,58 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in-up, .fade-in-scale').forEach(el => observer.observe(el));
 
         // Image Loading Handler
         document.querySelectorAll('img').forEach(img => {
             if (img.complete) {
                 img.classList.add('loaded');
             }
+        });
+
+        // Stats Counter Animation
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'));
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            el.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            el.textContent = Math.floor(current);
+                        }
+                    }, 30);
+                    statsObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-number').forEach(el => statsObserver.observe(el));
+
+        // Lightbox
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close lightbox on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
         });
 
         // Logic
@@ -576,7 +1091,17 @@
 
         // Set min date
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
-```
