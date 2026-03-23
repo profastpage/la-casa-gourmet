@@ -137,6 +137,21 @@
             box-shadow: 0 0 0 4px rgba(202, 138, 4, 0.1);
         }
 
+        /* Custom Select Dropdown Styling */
+        select.input-field option {
+            background-color: #121212;
+            color: #f5f5f4;
+            padding: 12px 16px;
+        }
+        select.input-field option:hover {
+            background-color: #ca8a04;
+            color: #000;
+        }
+        select.input-field option:checked {
+            background-color: #ca8a04;
+            color: #000;
+        }
+
         /* Animations */
         .fade-in-up {
             opacity: 0;
@@ -207,6 +222,28 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+        }
+
+        /* Hero Slider */
+        .hero-slider {
+            overflow: hidden;
+        }
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-slide img {
+            animation: kenburns 20s ease-out infinite;
+        }
+        @keyframes kenburns {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         /* Gradient Text */
@@ -364,14 +401,30 @@
         </div>
     </nav>
 
-    <!-- Hero Section - Full Bleed with Parallax -->
+    <!-- Hero Section - Full Bleed with Image Slider -->
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div class="absolute inset-0 z-0 parallax">
-            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2574&auto=format&fit=crop"
-                 alt="Fine Dining Experience"
-                 class="w-full h-full object-cover"
-                 onload="this.classList.add('loaded')"
-                 onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16549766b?q=80&w=2070&auto=format&fit=crop'">
+        <div class="absolute inset-0 z-0">
+            <!-- Hero Image Slider -->
+            <div class="hero-slider absolute inset-0">
+                <div class="hero-slide active">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=2574&auto=format&fit=crop"
+                         alt="Fine Dining Experience"
+                         class="w-full h-full object-cover"
+                         onload="this.classList.add('loaded')">
+                </div>
+                <div class="hero-slide">
+                    <img src="https://images.unsplash.com/photo-1514362545857-3bc16549766b?q=80&w=2070&auto=format&fit=crop"
+                         alt="Luxury Restaurant Interior"
+                         class="w-full h-full object-cover"
+                         onload="this.classList.add('loaded')">
+                </div>
+                <div class="hero-slide">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?q=80&w=2070&auto=format&fit=crop"
+                         alt="Gourmet Food Plating"
+                         class="w-full h-full object-cover"
+                         onload="this.classList.add('loaded')">
+                </div>
+            </div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-obsidian"></div>
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.8)_100%)]"></div>
         </div>
@@ -971,6 +1024,19 @@
     </a>
 
     <script>
+        // Hero Slider - Auto Advance Every 4 Seconds
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            heroSlides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % heroSlides.length;
+            heroSlides[currentSlide].classList.add('active');
+        }
+
+        // Change slide every 4 seconds
+        setInterval(nextSlide, 4000);
+
         // Scroll Progress
         window.addEventListener('scroll', () => {
             const scrollTop = window.scrollY;
