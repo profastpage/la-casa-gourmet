@@ -10,7 +10,7 @@
     
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://lacasagourmet.netlify.app/">
+    <meta property="og:url" content="https://la-casa-gourmet.vercel.app/">
     <meta property="og:title" content="La Casona Gourmet | Alta Cocina Peruana">
     <meta property="og:description" content="Reserva tu experiencia gastronómica premium en Lima. Sistema directo de reservas vía WhatsApp.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
@@ -21,8 +21,8 @@
     <meta name="twitter:description" content="Reserva tu experiencia gastronómica premium en Lima.">
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <!-- Favicon - LC Monogram Gold on Black -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='15' fill='%23050505'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='48' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ELC%3C/text%3E%3C/svg%3E">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -88,6 +88,40 @@
                 }
             }
         }
+    </script>
+
+    <!-- Schema.org JSON-LD for Restaurant -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "La Casona Gourmet",
+        "image": "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=1200&auto=format&fit=crop",
+        "url": "https://la-casa-gourmet.vercel.app",
+        "telephone": "+51919662011",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Principal 123",
+            "addressLocality": "San Isidro",
+            "addressRegion": "Lima",
+            "addressCountry": "PE"
+        },
+        "servesCuisine": ["Peruvian", "French", "Fine Dining"],
+        "priceRange": "$$$",
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                "opens": "12:00",
+                "closes": "23:00"
+            }
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "328"
+        }
+    }
     </script>
 
     <style>
@@ -383,6 +417,62 @@
         a, button {
             transition: all 0.3s ease;
         }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            background-color: #000;
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+        }
+        .mobile-menu-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 50%, rgba(212,175,55,0.03) 100%);
+            pointer-events: none;
+        }
+        .mobile-menu-item {
+            font-size: 2rem;
+            padding: 0.75rem 0;
+            position: relative;
+        }
+        .mobile-menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: #D4AF37;
+            transition: width 0.3s ease;
+        }
+        .mobile-menu-item:hover::after {
+            width: 60%;
+        }
+
+        /* Accessibility: prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .fade-in-up, .fade-in-scale {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-slide img {
+                animation: none !important;
+            }
+        }
+
+        /* Skeleton loading for images */
+        .skeleton-bg {
+            background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
+            background-size: 200% 100%;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-black">
@@ -424,18 +514,27 @@
                 Reservar Mesa
             </a>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white z-50 focus:outline-none group">
-                <svg class="w-6 h-6 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <button id="mobile-menu-btn" class="md:hidden text-white z-[60] focus:outline-none group" aria-label="Abrir menú">
+                <svg id="hamburger-icon" class="w-7 h-7 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                <svg id="close-icon" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-gradient-to-b from-obsidian via-charcoal to-obsidian z-40 transform translate-x-full transition-transform duration-500 flex flex-col items-center justify-center space-y-8 md:hidden">
-            <a href="#menu" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Menú</a>
-            <a href="#experience" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Experiencia</a>
-            <a href="#chef" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Chef</a>
-            <a href="#gallery" class="text-3xl font-serif text-white mobile-link hover:text-gold-500 transition-colors">Galería</a>
-            <a href="#reserve" class="text-3xl font-serif text-gold-500 mobile-link">Reservar</a>
+        <!-- Mobile Menu - Full Screen Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 top-0 left-0 right-0 bottom-0 z-[55] transform translate-x-full transition-transform duration-500 md:hidden mobile-menu-overlay">
+            <div class="absolute inset-0 flex flex-col items-center justify-center gap-10">
+                <a href="#menu" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Menú</a>
+                <a href="#experience" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Experiencia</a>
+                <a href="#chef" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Chef</a>
+                <a href="#gallery" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Galería</a>
+                <a href="#reserve" class="mobile-menu-item font-serif text-[#D4AF37] mobile-link hover:text-gold-300 transition-colors">Reservar</a>
+                <div class="mt-8 pt-8 border-t border-white/10">
+                    <a href="https://wa.me/51933667414?text=%F0%9F%8D%BD%EF%B8%8F%20*Hola%20La%20Casona*%20Quisiera%20m%C3%A1s%20informaci%C3%B3n." target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] rounded-full text-sm font-bold uppercase tracking-widest hover:bg-[#D4AF37]/20 transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -1050,9 +1149,9 @@
                     </p>
                 </div>
                 <div class="flex items-center gap-6">
-                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Instagram</a>
-                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Facebook</a>
-                    <a href="#" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">TikTok</a>
+                    <a href="https://www.instagram.com/lacasonagourmet/" target="_blank" rel="noopener noreferrer" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Instagram</a>
+                    <a href="https://www.facebook.com/lacasonagourmet/" target="_blank" rel="noopener noreferrer" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">Facebook</a>
+                    <a href="https://www.tiktok.com/@lacasonagourmet" target="_blank" rel="noopener noreferrer" class="text-stone-500 hover:text-gold-500 transition-colors text-sm uppercase tracking-widest">TikTok</a>
                 </div>
             </div>
         </div>
@@ -1108,20 +1207,34 @@
             }
         });
 
-        // Mobile Menu
+        // Mobile Menu - Toggle hamburger/close icons
         const mobileBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+        let menuOpen = false;
 
-        mobileBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('translate-x-full');
-            document.body.classList.toggle('overflow-hidden');
-        });
+        function toggleMobileMenu() {
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.classList.add('overflow-hidden');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('overflow-hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+
+        mobileBtn.addEventListener('click', toggleMobileMenu);
 
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.classList.remove('overflow-hidden');
+                if (menuOpen) toggleMobileMenu();
             });
         });
 
