@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Digital | La Casona Gourmet - Alta Cocina Peruana</title>
+    <meta name="description" content="Carta digital completa de La Casona Gourmet. Alta cocina peruana con tecnicas francesas. Entradas, fondos, postres y bebidas.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://la-casa-gourmet.pages.dev/carta.html">
+    <meta property="og:title" content="Carta Digital | La Casona Gourmet">
+    <meta property="og:description" content="Descubre nuestra carta completa. Alta cocina peruana.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='15' fill='%23050505'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='48' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3ELC%3C/text%3E%3C/svg%3E">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['"Inter"', 'sans-serif'],
+                        'serif': ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        'obsidian': '#050505',
+                        'charcoal': '#121212',
+                        'gold': { 50:'#fefce8',100:'#fef9c3',200:'#fef08a',300:'#fde047',400:'#eab308',500:'#ca8a04',600:'#a16207',700:'#854d0e' },
+                        'stone': { 50:'#fafaf9',100:'#f5f5f4',200:'#e7e5e4',300:'#d6d3d1',400:'#a8a29e',500:'#78716c',600:'#57534e',700:'#44403c' },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #050505; color: #f5f5f4; -webkit-font-smoothing: antialiased; }
+        .gradient-text { background: linear-gradient(135deg, #ca8a04 0%, #eab308 50%, #ca8a04 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        /* Animations */
+        .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .fade-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-left.visible { opacity: 1; transform: translateX(0); }
+        .fade-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-right.visible { opacity: 1; transform: translateX(0); }
+        .scale-in { opacity: 0; transform: scale(0.9); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .scale-in.visible { opacity: 1; transform: scale(1); }
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        /* Hero Parallax */
+        .hero-bg { transition: transform 0.1s linear; will-change: transform; }
+
+        /* Category Tab */
+        .cat-tab { position: relative; transition: all 0.3s ease; }
+        .cat-tab::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: #D4AF37; transition: width 0.3s ease; }
+        .cat-tab.active::after, .cat-tab:hover::after { width: 80%; }
+        .cat-tab.active { color: #D4AF37; }
+
+        /* Menu Item Hover */
+        .menu-item-card { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .menu-item-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(202,138,4,0.12); }
+        .menu-item-card:hover .item-img { transform: scale(1.08); }
+        .menu-item-card:hover .item-overlay { opacity: 1; }
+        .item-img { transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .item-overlay { opacity: 0; transition: opacity 0.4s ease; }
+
+        /* Divider */
+        .gold-divider { height: 1px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); }
+
+        /* Image skeleton */
+        img { background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        img.loaded { animation: none; background: none; }
+        @keyframes loading { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+        /* WhatsApp float */
+        .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 50; animation: pulse-slow 2s infinite; transition: all 0.3s ease; }
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+        @keyframes pulse-slow { 0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,0.3)} 50%{box-shadow:0 0 0 12px rgba(212,175,55,0)} }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ca8a04, #a16207); border-radius: 4px; }
+
+        /* Btn glow */
+        .btn-glow { position: relative; overflow: hidden; }
+        .btn-glow::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s ease; }
+        .btn-glow:hover::before { left: 100%; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .fade-up, .fade-left, .fade-right, .scale-in { opacity: 1 !important; transform: none !important; }
+        }
+
+        /* Back to top */
+        .back-btn { transition: all 0.3s ease; }
+        .back-btn:hover { color: #D4AF37; transform: translateX(-4px); }
+
+        /* Category section */
+        .category-section { display: none; }
+        .category-section.active { display: block; }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <svg class="w-5 h-5 text-stone-500 group-hover:text-gold-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="text-xs text-stone-500 group-hover:text-gold-500 transition-colors uppercase tracking-widest hidden sm:inline">Volver al sitio</span>
+            </a>
+            <a href="index.html" class="text-xl lg:text-2xl font-serif font-bold text-white tracking-tight group">
+                La Casona<span class="text-gold-500 group-hover:text-gold-400 transition-colors">.</span>
+            </a>
+            <a href="index.html#reserve" class="text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors hidden sm:block">Reservar</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img id="heroBg" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop"
+                 class="hero-bg w-full h-full object-cover" alt="Gourmet Food"
+                 onload="this.classList.add('loaded')">
+            <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(5,5,5,0.85), rgba(5,5,5,0.6), rgba(5,5,5,0.95));"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.6)_100%)]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center pt-20">
+            <div class="fade-up">
+                <span class="inline-block text-gold-500 font-bold tracking-[0.3em] uppercase text-xs mb-6">La Casona Gourmet</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-[1.05] fade-up stagger-1">
+                Nuestra <span class="italic gradient-text">Carta</span>
+            </h1>
+            <p class="text-lg md:text-xl text-stone-300 font-light leading-relaxed max-w-2xl mx-auto mb-8 fade-up stagger-2">
+                Alta cocina peruana con alma francesa. Cada plato, una experiencia.
+            </p>
+            <div class="flex flex-wrap justify-center gap-6 text-stone-400 text-sm fade-up stagger-3">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gold-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span>4.9/5 Google</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>Mar - Dom 12:00 - 23:00</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>San Isidro, Lima</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-stone-400">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </header>
+
+    <!-- Category Tabs -->
+    <section class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex items-center justify-center gap-6 md:gap-12 py-4 overflow-x-auto">
+                <button onclick="showCategory('entradas')" class="cat-tab active text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="entradas">Entradas</button>
+                <button onclick="showCategory('fondos')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="fondos">Fondos</button>
+                <button onclick="showCategory('postres')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="postres">Postres</button>
+                <button onclick="showCategory('bebidas')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="bebidas">Bebidas</button>
+                <button onclick="showCategory('todos')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="todos">Ver Todo</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Content -->
+    <main class="py-16 md:py-24 bg-obsidian">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+            <!-- ENTRADAS -->
+            <div class="category-section active" id="cat-entradas">
+                <div class="text-center mb-16 fade-up">
+                    <span class="text-gold-500 font-bold tracking-[0.3em] uppercase text-xs">Para Comenzar</span>
+                    <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mt-3">Entradas</h2>
+                    <div class="gold-divider max-w-xs mx-auto mt-6"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Ceviche Clasico -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-1 cursor-pointer" onclick="orderItem('Ceviche Clasico')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Ceviche Clasico" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-wider rounded-full">Best Seller</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Ceviche Clasico</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 55</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Pescado del dia corvina, leche de tigre, camote glaseado, choclo tostado, cebolla morada. Marinado al momento con limon sutil.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tiradito Nikkei -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-2 cursor-pointer" onclick="orderItem('Tiradito Nikkei')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1548940740-204726a19be3?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Tiradito Nikkei" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full">Nuevo</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Tiradito Nikkei</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 62</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Lomo de atun fresco, salsa miso tigre, ají amarillo, gergilin tostado, microgreens. Fusion peruano-japonesa.</p>
+                        </div>
+                    </div>
+
+                    <!-- Aji de Gallina -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-3 cursor-pointer" onclick="orderItem('Aji de Gallina')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1624300629298-e9de39c13be5?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Aji de Gallina" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full">Picante</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Aji de Gallina</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 52</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Gallina desmenuzada, salsa de aji amarillo, pecanas caramelizadas, arroz graneado, huevo duro, aceitunas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Causa Limena -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-4 cursor-pointer" onclick="orderItem('Causa Limena')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Causa Limena" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Causa Limena</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 38</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Papa amarilla premium, palta hass, atun fresco, huevo de codorniz, mayonesa de limon, aji rocoto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FONDOS -->
+            <div class="category-section" id="cat-fondos">
+                <div class="text-center mb-16 fade-up">
+                    <span class="text-gold-500 font-bold tracking-[0.3em] uppercase text-xs">El Plato Principal</span>
+                    <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mt-3">Fondos</h2>
+                    <div class="gold-divider max-w-xs mx-auto mt-6"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Lomo Saltado -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-1 cursor-pointer" onclick="orderItem('Lomo Saltado')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Lomo Saltado" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-wider rounded-full">Popular</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Lomo Saltado</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 68</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Lomo fino de res, salteado al wok, papas nativas, arroz graneado, salsa de aji amarillo, cebolla morada.</p>
+                        </div>
+                    </div>
+
+                    <!-- Seco de Cordero -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-2 cursor-pointer" onclick="orderItem('Seco de Cordero')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Seco de Cordero" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-wider rounded-full">Chef Recomienda</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Seco de Cordero</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 72</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Cordero trujillano, cilantro fresco, frejoles canarios, yuca sancochada, salsa criolla, arroz blanco.</p>
+                        </div>
+                    </div>
+
+                    <!-- Arroz con Mariscos -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-3 cursor-pointer" onclick="orderItem('Arroz con Mariscos')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Arroz con Mariscos" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Arroz con Mariscos</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 65</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Arroz tipo valenciano, langostinos, pulpo, calamar, camarones, aji panca, pimenton ahumado, sofrito casero.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chupe de Camarones -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-4 cursor-pointer" onclick="orderItem('Chupe de Camarones')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Chupe de Camarones" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Chupe de Camarones</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 58</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Camarones frescos del Pacifico, crema de zapallo, queso fresco, huevo, arroz, huancaina suave, rocoto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POSTRES -->
+            <div class="category-section" id="cat-postres">
+                <div class="text-center mb-16 fade-up">
+                    <span class="text-gold-500 font-bold tracking-[0.3em] uppercase text-xs">Dulce Final</span>
+                    <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mt-3">Postres</h2>
+                    <div class="gold-divider max-w-xs mx-auto mt-6"></div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Suspiro a la Limena -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-1 cursor-pointer" onclick="orderItem('Suspiro a la Limena')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Suspiro a la Limena" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-wider rounded-full">Favorito</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Suspiro a la Limena</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 28</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Merengue italiano, manjar blanco casero, canela molida, leche condensada, yemas esponjosas.</p>
+                        </div>
+                    </div>
+
+                    <!-- Tres Leches -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-2 cursor-pointer" onclick="orderItem('Tres Leches')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Tres Leches" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Tres Leches</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 30</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Bizcocho esponjoso, leche evaporada, condensada, crema fresca, vainilla de Madagascar, merengue.</p>
+                        </div>
+                    </div>
+
+                    <!-- Picarones -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-3 cursor-pointer" onclick="orderItem('Picarones')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Picarones" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Picarones</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 22</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Masa de camote y zapallo, chancaca artesanal, canela, clavo de olor. Tradicion peruana dorada al instante.</p>
+                        </div>
+                    </div>
+
+                    <!-- Lucuma Ice Cream -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-4 cursor-pointer" onclick="orderItem('Helado de Lucuma')">
+                        <div class="relative h-56 md:h-64 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Helado de Lucuma" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-serif text-white group-hover:text-gold-400 transition-colors">Helado de Lucuma</h3>
+                                <span class="text-xl font-bold text-gold-500">S/ 24</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Helado artesanal de lucuma, crema batida, salsa de chocolate amargo, nueces caramelizadas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BEBIDAS -->
+            <div class="category-section" id="cat-bebidas">
+                <div class="text-center mb-16 fade-up">
+                    <span class="text-gold-500 font-bold tracking-[0.3em] uppercase text-xs">Para Acompanar</span>
+                    <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mt-3">Bebidas</h2>
+                    <div class="gold-divider max-w-xs mx-auto mt-6"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+
+                    <!-- Pisco Sour -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-1 cursor-pointer" onclick="orderItem('Pisco Sour')">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Pisco Sour" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-gold-500 text-black text-[10px] font-bold uppercase tracking-wider rounded-full">Best Seller</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Pisco Sour</h3>
+                                <span class="text-lg font-bold text-gold-500">S/ 35</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Pisco Quebranta, limon sutil, jarabe, clara de huevo, amargo de angostura.</p>
+                        </div>
+                    </div>
+
+                    <!-- Pisco Maracuya -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-2 cursor-pointer" onclick="orderItem('Pisco de Maracuya')">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Pisco Maracuya" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                            <span class="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-[10px] font-bold uppercase tracking-wider rounded-full">Nuevo</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Pisco Maracuya</h3>
+                                <span class="text-lg font-bold text-gold-500">S/ 38</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Pisco Acholado, pulpa de maracuya fresca, jarabe de chancaca, limon.</p>
+                        </div>
+                    </div>
+
+                    <!-- Chilcano -->
+                    <div class="menu-item-card group bg-charcoal/50 border border-white/5 rounded-2xl overflow-hidden fade-up stagger-3 cursor-pointer" onclick="orderItem('Chilcano de Pisco')">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?q=80&w=1600&auto=format&fit=crop" class="item-img w-full h-full object-cover" alt="Chilcano" loading="lazy" onload="this.classList.add('loaded')">
+                            <div class="item-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-6">
+                                <button class="px-5 py-2.5 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-gold-400 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                                    Pedir Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-serif text-white group-hover:text-gold-400 transition-colors">Chilcano de Pisco</h3>
+                                <span class="text-lg font-bold text-gold-500">S/ 32</span>
+                            </div>
+                            <p class="text-stone-400 text-sm font-light leading-relaxed">Pisco Quebranta, ginger ale, limon, jarabe de gengibre, angostura, hielo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- CTA Banner -->
+    <section class="py-20 bg-gradient-to-r from-gold-600 to-gold-500 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6 fade-up">Listo para pedir?</h2>
+            <p class="text-white/80 text-lg mb-8 fade-up stagger-1">Escanea el QR, llama o haz tu pedido directo por WhatsApp.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up stagger-2">
+                <a href="https://wa.me/51933667414?text=%F0%9F%8D%BD%EF%B8%8F%20*Hola%20La%20Casona*%20Quisiera%20hacer%20un%20pedido." target="_blank" class="px-10 py-4 bg-black text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-black/80 transition-all shadow-xl btn-glow">Pedir por WhatsApp</a>
+                <a href="index.html#reserve" class="px-10 py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/30 transition-all">Reservar Mesa</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-10 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-stone-500">La Casona Gourmet | Alta Cocina Peruana | San Isidro, Lima</p>
+            <p class="text-xs text-stone-500">2025 Todos los derechos reservados.</p>
+            <a href="tel:+51919662011" class="text-xs text-gold-500 hover:text-gold-400 transition-colors">+51 919 662 011</a>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/51933667414" target="_blank" class="wa-float w-14 h-14 rounded-full bg-black border-2 border-[#D4AF37] flex items-center justify-center shadow-lg">
+        <svg class="w-7 h-7 text-[#D4AF37]" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </a>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => observer.observe(el));
+
+        // Category tabs
+        function showCategory(cat) {
+            document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('cat-' + cat).classList.add('active');
+            document.querySelector('[data-cat="' + cat + '"]').classList.add('active');
+            window.scrollTo({ top: document.querySelector('#cat-' + cat).offsetTop - 80, behavior: 'smooth' });
+            // Re-trigger animations for newly visible items
+            setTimeout(() => {
+                document.querySelectorAll('#cat-' + cat + ' .fade-up, #cat-' + cat + ' .fade-left, #cat-' + cat + ' .scale-in').forEach(el => {
+                    el.classList.remove('visible');
+                    observer.observe(el);
+                });
+            }, 300);
+        }
+
+        // WhatsApp order
+        function orderItem(item) {
+            const msg = 'Hola La Casona! Quisiera pedir: ' + item + '. Por favor confirmar disponibilidad.';
+            window.open('https://wa.me/51933667414?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        // Parallax hero
+        window.addEventListener('scroll', () => {
+            const bg = document.getElementById('heroBg');
+            if (bg) {
+                bg.style.transform = 'translateY(' + (window.scrollY * 0.3) + 'px)';
+            }
+        });
+    </script>
+</body>
+</html>
