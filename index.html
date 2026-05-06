@@ -346,6 +346,7 @@
         }
         .masonry-item:nth-child(1) { grid-row: span 2; grid-column: span 2; }
         .masonry-item:nth-child(4) { grid-column: span 2; }
+        .masonry-item:nth-child(6) { grid-row: span 2; }
 
         /* Lightbox */
         .lightbox {
@@ -472,6 +473,20 @@
         .skeleton-bg {
             background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
             background-size: 200% 100%;
+        }
+
+        /* Toast Notification */
+        .booking-toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 90vw;
+        }
+        .booking-toast.show {
+            top: 24px;
         }
     </style>
 </head>
@@ -901,6 +916,22 @@
                          onload="this.classList.add('loaded')"
                          onerror="this.src='https://cdn.pixabay.com/photo/2015/01/20/16/29/restaurant-603846_1280.jpg'">
                 </div>
+                <div class="masonry-item fade-in-up stagger-3 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1600&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Barra de Cocktails"
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.src='https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181950_1280.jpg'">
+                </div>
+                <div class="masonry-item fade-in-up stagger-4 img-container rounded-xl cursor-pointer" onclick="openLightbox(this)">
+                    <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1600&auto=format&fit=crop"
+                         class="w-full h-full object-cover img-zoom rounded-xl"
+                         alt="Ambiente Nocturno"
+                         loading="lazy"
+                         onload="this.classList.add('loaded')"
+                         onerror="this.src='https://cdn.pixabay.com/photo/2017/08/10/01/32/restaurant-2615760_1280.jpg'">
+                </div>
             </div>
         </div>
     </section>
@@ -951,16 +982,25 @@
                     </div>
                 </div>
                 <div class="fade-in-up stagger-2">
-                    <div class="relative h-80 lg:h-full rounded-2xl overflow-hidden border border-white/10">
-                        <div class="absolute inset-0 bg-gradient-to-br from-gold-500/10 to-transparent"></div>
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.699814056707!2d-77.03652568561728!3d-12.097062991469616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5b9e07e0b%3A0x6c2c5a0e0e0e0e0e!2sSan%20Isidro%2C%20Lima!5e0!3m2!1ses!2spe!4v1234567890"
-                            class="w-full h-full grayscale hover:grayscale-0 transition-all duration-500"
-                            style="border:0; filter: invert(90%) hue-rotate(180deg);"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                    <div class="relative h-80 lg:h-full rounded-2xl overflow-hidden border border-white/10 group cursor-pointer"
+                         onclick="window.open('https://www.google.com/maps/search/Av.+Principal+123+San+Isidro+Lima+Peru', '_blank')">
+                        <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?q=80&w=1600&auto=format&fit=crop"
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                             alt="Ubicación La Casona Gourmet"
+                             loading="lazy"
+                             onload="this.classList.add('loaded')"
+                             onerror="this.src='https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1600&auto=format&fit=crop'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <svg class="w-5 h-5 text-[#D4AF37]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span class="text-white font-bold text-sm">San Isidro, Lima</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-[#D4AF37] text-xs font-bold uppercase tracking-widest group-hover:gap-3 transition-all">
+                                <span>Como llegar</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -982,6 +1022,12 @@
 
             <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-2xl fade-in-up stagger-2 border border-white/10">
                 <form id="booking-form" onsubmit="handleBooking(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Nombre completo</label>
+                            <input type="text" id="name" required placeholder="Ej: Carlos Mendoza" class="w-full input-field rounded-xl px-4 py-4 text-sm text-white placeholder-stone-600">
+                        </div>
+                    </div>
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Fecha</label>
@@ -1312,14 +1358,32 @@
 
         function handleBooking(e) {
             e.preventDefault();
+            const name = document.getElementById('name').value;
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
             const guests = document.getElementById('guests').value;
             const zone = document.getElementById('zone').value;
 
-            const msg = `🍷 *Reserva La Casona*\n\n📅 ${date}\n⏰ ${time}\n👥 ${guests} pax\n🪑 ${zone}\n\n¿Confirmado?`;
+            const msg = `🍷 *Reserva La Casona*\n\n👤 ${name}\n📅 ${date}\n⏰ ${time}\n👥 ${guests} pax\n🪑 ${zone}\n\n¿Confirmado?`;
             window.open(`https://wa.me/51933667414?text=${encodeURIComponent(msg)}`, '_blank');
         }
+
+        // Booking Confirmation Toast
+        function showBookingToast() {
+            const toast = document.getElementById('booking-toast');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 5000);
+        }
+
+        // Detect when user returns from WhatsApp
+        let wasBooked = false;
+        document.getElementById('booking-form').addEventListener('submit', () => { wasBooked = true; });
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && wasBooked) {
+                wasBooked = false;
+                showBookingToast();
+            }
+        });
 
         // Set min date
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
@@ -1335,5 +1399,21 @@
             });
         });
     </script>
+
+    <!-- Booking Confirmation Toast -->
+    <div id="booking-toast" class="booking-toast">
+        <div class="glass-panel px-6 py-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/10 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <div>
+                <p class="text-white font-bold text-sm">Reserva enviada por WhatsApp</p>
+                <p class="text-stone-400 text-xs">Te confirmaremos en menos de 2 minutos.</p>
+            </div>
+            <button onclick="document.getElementById('booking-toast').classList.remove('show')" class="text-stone-500 hover:text-white transition-colors ml-2 flex-shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    </div>
 </body>
 </html>
