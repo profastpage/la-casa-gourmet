@@ -475,6 +475,85 @@
             background-size: 200% 100%;
         }
 
+        /* Benefit Card Hover */
+        .benefit-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .benefit-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.07) !important;
+            border-color: rgba(212, 175, 55, 0.2) !important;
+            box-shadow: 0 8px 32px rgba(202, 138, 4, 0.08);
+        }
+
+        /* Carta Modal */
+        .carta-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+        }
+        .carta-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .carta-modal-container {
+            position: fixed;
+            inset: 0;
+            z-index: 201;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .carta-modal-container.active {
+            transform: translateY(0);
+        }
+        .carta-modal-header {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(5, 5, 5, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .carta-modal-close {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f5f5f4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .carta-modal-close:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: #D4AF37;
+        }
+        .carta-modal-body {
+            flex: 1;
+            overflow-y: auto;
+            background: #050505;
+        }
+        .carta-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-black">
@@ -494,7 +573,7 @@
                     Menú
                     <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
                 </a>
-                <a href="carta.html" target="_blank" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
+                <a href="javascript:void(0)" onclick="openCartaModal()" class="text-xs font-medium text-stone-400 hover:text-gold-500 transition-colors uppercase tracking-widest group relative">
                     Carta
                     <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold-500 transition-all group-hover:w-full"></span>
                 </a>
@@ -532,7 +611,7 @@
         <div id="mobile-menu" class="fixed inset-0 top-0 left-0 right-0 bottom-0 z-[55] transform translate-x-full transition-transform duration-500 md:hidden mobile-menu-overlay">
             <div class="absolute inset-0 flex flex-col items-center justify-center gap-10">
                 <a href="#menu" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Menú</a>
-                <a href="carta.html" target="_blank" class="mobile-menu-item font-serif text-[#D4AF37] mobile-link hover:text-gold-300 transition-colors">Carta PDF</a>
+                <a href="javascript:void(0)" onclick="openCartaModal(); if(menuOpen) toggleMobileMenu();" class="mobile-menu-item font-serif text-[#D4AF37] mobile-link hover:text-gold-300 transition-colors">Carta</a>
                 <a href="#experience" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Experiencia</a>
                 <a href="#chef" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Chef</a>
                 <a href="#gallery" class="mobile-menu-item font-serif text-white mobile-link hover:text-gold-400 transition-colors">Galería</a>
@@ -598,9 +677,9 @@
                 <a href="#reserve" class="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-gold-600 to-gold-500 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:from-gold-500 hover:to-gold-400 transition-all shadow-[0_0_40px_-10px_rgba(202,138,4,0.5)] btn-glow">
                     Reservar Ahora
                 </a>
-                <a href="carta.html" target="_blank" class="w-full sm:w-auto px-10 py-4 border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/10 hover:border-gold-500/50 transition-all backdrop-blur-sm">
+                <button onclick="openCartaModal()" class="w-full sm:w-auto px-10 py-4 border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/10 hover:border-gold-500/50 transition-all backdrop-blur-sm">
                     Ver Carta Digital
-                </a>
+                </button>
             </div>
 
             <!-- Trust Badges -->
@@ -641,37 +720,37 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="py-20 bg-obsidian border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center p-6 fade-in-up stagger-1">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
-                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <!-- Features Section - Compact Mobile Optimized -->
+    <section class="py-10 md:py-16 bg-obsidian border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+                <div class="benefit-card text-center p-3 md:p-5 rounded-[15px] fade-in-up stagger-1 cursor-default" style="background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);">
+                    <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Reserva Instantánea</h3>
-                    <p class="text-stone-400 text-base leading-relaxed">Confirmación en menos de 2 minutos vía WhatsApp.</p>
+                    <h3 class="text-white font-bold mb-1 text-sm md:text-base">Reserva Instantánea</h3>
+                    <p class="text-stone-500 text-xs md:text-sm leading-relaxed">Confirmación en menos de 2 min vía WhatsApp.</p>
                 </div>
-                <div class="text-center p-6 fade-in-up stagger-2">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
-                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="benefit-card text-center p-3 md:p-5 rounded-[15px] fade-in-up stagger-2 cursor-default" style="background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);">
+                    <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Sin Comisiones</h3>
-                    <p class="text-stone-400 text-base leading-relaxed">Reserva directa sin intermediarios ni recargos.</p>
+                    <h3 class="text-white font-bold mb-1 text-sm md:text-base">Sin Comisiones</h3>
+                    <p class="text-stone-500 text-xs md:text-sm leading-relaxed">Reserva directa sin intermediarios ni recargos.</p>
                 </div>
-                <div class="text-center p-6 fade-in-up stagger-3">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
-                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                <div class="benefit-card text-center p-3 md:p-5 rounded-[15px] fade-in-up stagger-3 cursor-default" style="background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);">
+                    <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Ingredientes Frescos</h3>
-                    <p class="text-stone-400 text-base leading-relaxed">Productos locales seleccionados diariamente.</p>
+                    <h3 class="text-white font-bold mb-1 text-sm md:text-base">Ingredientes Frescos</h3>
+                    <p class="text-stone-500 text-xs md:text-sm leading-relaxed">Productos locales seleccionados diariamente.</p>
                 </div>
-                <div class="text-center p-6 fade-in-up stagger-4">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center border border-gold-500/20">
-                        <svg class="w-8 h-8 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <div class="benefit-card text-center p-3 md:p-5 rounded-[15px] fade-in-up stagger-4 cursor-default" style="background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);">
+                    <div class="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 md:mb-3 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-600/10 flex items-center justify-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                     </div>
-                    <h3 class="text-white font-bold mb-2">Atención Premium</h3>
-                    <p class="text-stone-400 text-base leading-relaxed">Experiencia personalizada de principio a fin.</p>
+                    <h3 class="text-white font-bold mb-1 text-sm md:text-base">Atención Premium</h3>
+                    <p class="text-stone-500 text-xs md:text-sm leading-relaxed">Experiencia personalizada de principio a fin.</p>
                 </div>
             </div>
         </div>
@@ -686,10 +765,10 @@
                     <h2 class="text-3xl md:text-5xl font-serif font-medium text-white mt-2 mb-4">Signature Dishes</h2>
                     <p class="text-stone-500 font-light max-w-md">Nuestros platos más solicitados, preparados con ingredientes de primera calidad.</p>
                 </div>
-                <a href="carta.html" target="_blank" class="hidden md:flex items-center text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors group mt-6 md:mt-0">
+                <button onclick="openCartaModal()" class="hidden md:flex items-center text-xs font-bold text-gold-500 uppercase tracking-widest hover:text-gold-400 transition-colors group mt-6 md:mt-0">
                     Ver Carta Digital 
                     <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
+                </button>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -1270,6 +1349,30 @@
         </div>
     </footer>
 
+    <!-- Carta Digital Modal -->
+    <div class="carta-modal-overlay" id="cartaModalOverlay" onclick="closeCartaModal()"></div>
+    <div class="carta-modal-container" id="cartaModalContainer">
+        <div class="carta-modal-header">
+            <div class="flex items-center gap-3">
+                <span class="text-gold-500 font-bold tracking-[0.2em] uppercase text-xs">Nuestra Carta</span>
+                <span class="text-stone-600 text-xs">|</span>
+                <span class="text-stone-500 text-xs font-light">La Casona Gourmet</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="carta.pdf" target="_blank" class="hidden md:inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-gold-500 uppercase tracking-widest border border-gold-500/20 rounded-full hover:bg-gold-500/10 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    PDF
+                </a>
+                <button class="carta-modal-close" onclick="closeCartaModal()" aria-label="Cerrar carta">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div class="carta-modal-body">
+            <iframe id="cartaIframe" src="" title="Carta Digital La Casona Gourmet" loading="lazy"></iframe>
+        </div>
+    </div>
+
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/51933667414?text=🍽️%20*Hola%20La%20Casona!*%20Quisiera%20más%20información." target="_blank" 
        class="whatsapp-float w-16 h-16 rounded-full bg-black border-2 border-[#D4AF37] flex items-center justify-center shadow-lg shadow-black/50 hover:shadow-[#D4AF37]/30 transition-all z-50 group">
@@ -1437,6 +1540,39 @@
 
         // Set min date
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        // Carta Modal
+        function openCartaModal() {
+            const overlay = document.getElementById('cartaModalOverlay');
+            const container = document.getElementById('cartaModalContainer');
+            const iframe = document.getElementById('cartaIframe');
+            iframe.src = 'carta.html';
+            overlay.classList.add('active');
+            container.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartaModal() {
+            const overlay = document.getElementById('cartaModalOverlay');
+            const container = document.getElementById('cartaModalContainer');
+            const iframe = document.getElementById('cartaIframe');
+            container.classList.remove('active');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                iframe.src = '';
+            }, 500);
+        }
+
+        // Close carta modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const container = document.getElementById('cartaModalContainer');
+                if (container && container.classList.contains('active')) {
+                    closeCartaModal();
+                }
+            }
+        });
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

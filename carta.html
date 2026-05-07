@@ -62,8 +62,8 @@
 
         /* Category Tab */
         .cat-tab { position: relative; transition: all 0.3s ease; }
-        .cat-tab::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: #D4AF37; transition: width 0.3s ease; }
-        .cat-tab.active::after, .cat-tab:hover::after { width: 80%; }
+        .cat-tab::after { content: ''; position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 0; height: 1.5px; background: #D4AF37; transition: width 0.3s ease; border-radius: 1px; }
+        .cat-tab.active::after, .cat-tab:hover::after { width: 60%; }
         .cat-tab.active { color: #D4AF37; }
 
         /* Menu Item Hover */
@@ -170,9 +170,9 @@
     </header>
 
     <!-- Category Tabs -->
-    <section class="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-[#D4AF37]/10">
+    <section class="sticky top-0 z-40 bg-black/95 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
-            <div class="flex items-center justify-center gap-5 md:gap-12 py-1.5 md:py-3 overflow-x-auto">
+            <div class="flex items-center justify-center gap-5 md:gap-12 py-0.5 md:py-1 overflow-x-auto border-b border-[#D4AF37]/8">
                 <button onclick="showCategory('entradas')" class="cat-tab active text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="entradas">Entradas</button>
                 <button onclick="showCategory('fondos')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="fondos">Fondos</button>
                 <button onclick="showCategory('postres')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="postres">Postres</button>
