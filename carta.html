@@ -106,9 +106,19 @@
         .back-btn { transition: all 0.3s ease; }
         .back-btn:hover { color: #D4AF37; transform: translateX(-4px); }
 
-        /* Category section */
-        .category-section { display: none; }
-        .category-section.active { display: block; }
+        /* Category section - use height/visibility to avoid reflow lag */
+        .category-section {
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+        }
+        .category-section.active {
+            height: auto;
+            overflow: visible;
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-black">
@@ -172,7 +182,7 @@
     <!-- Category Tabs -->
     <section class="sticky top-0 z-40 bg-black/95 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
-            <div class="flex items-center justify-center gap-5 md:gap-12 py-0.5 md:py-1 overflow-x-auto border-b border-[#D4AF37]/8">
+            <div class="flex items-center justify-center gap-5 md:gap-12 py-0 md:py-0.5 overflow-x-auto border-b border-[#D4AF37]/8">
                 <button onclick="showCategory('entradas')" class="cat-tab active text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="entradas">Entradas</button>
                 <button onclick="showCategory('fondos')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="fondos">Fondos</button>
                 <button onclick="showCategory('postres')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="postres">Postres</button>
@@ -583,17 +593,19 @@
 
         // Category tabs
         function showCategory(cat) {
-            document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+            // Instant switch - no animations, no smooth scroll
+            document.querySelectorAll('.category-section').forEach(s => {
+                s.classList.remove('active');
+            });
             document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
             const section = document.getElementById('cat-' + cat);
             section.classList.add('active');
             document.querySelector('[data-cat="' + cat + '"]').classList.add('active');
-            window.scrollTo({ top: section.offsetTop - 60, behavior: 'smooth' });
-            // Immediately show all animated children - no delay, no black flash
-            requestAnimationFrame(() => {
-                section.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => {
-                    el.classList.add('visible');
-                });
+            // Jump instantly to content area - no smooth scroll
+            window.scrollTo({ top: section.offsetTop - 60, behavior: 'instant' });
+            // Immediately show all animated children
+            section.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => {
+                el.classList.add('visible');
             });
         }
 
