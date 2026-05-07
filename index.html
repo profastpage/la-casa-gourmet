@@ -475,19 +475,6 @@
             background-size: 200% 100%;
         }
 
-        /* Toast Notification */
-        .booking-toast {
-            position: fixed;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 200;
-            transition: top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            max-width: 90vw;
-        }
-        .booking-toast.show {
-            top: 24px;
-        }
     </style>
 </head>
 <body class="antialiased selection:bg-gold-500 selection:text-black">
@@ -1448,23 +1435,6 @@
             window.open(`https://wa.me/51933667414?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // Booking Confirmation Toast
-        function showBookingToast() {
-            const toast = document.getElementById('booking-toast');
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 5000);
-        }
-
-        // Detect when user returns from WhatsApp
-        let wasBooked = false;
-        document.getElementById('booking-form').addEventListener('submit', () => { wasBooked = true; });
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden && wasBooked) {
-                wasBooked = false;
-                showBookingToast();
-            }
-        });
-
         // Set min date
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
 
@@ -1480,20 +1450,5 @@
         });
     </script>
 
-    <!-- Booking Confirmation Toast -->
-    <div id="booking-toast" class="booking-toast">
-        <div class="glass-panel px-6 py-4 rounded-2xl border border-[#D4AF37]/30 shadow-2xl shadow-[#D4AF37]/10 flex items-center gap-4">
-            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <div>
-                <p class="text-white font-bold text-sm">Reserva enviada por WhatsApp</p>
-                <p class="text-stone-400 text-xs">Te confirmaremos en menos de 2 minutos.</p>
-            </div>
-            <button onclick="document.getElementById('booking-toast').classList.remove('show')" class="text-stone-500 hover:text-white transition-colors ml-2 flex-shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-        </div>
-    </div>
 </body>
 </html>
