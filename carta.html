@@ -170,9 +170,9 @@
     </header>
 
     <!-- Category Tabs -->
-    <section class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="flex items-center justify-center gap-6 md:gap-12 py-4 overflow-x-auto">
+    <section class="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-[#D4AF37]/10">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 lg:px-12">
+            <div class="flex items-center justify-center gap-5 md:gap-12 py-1.5 md:py-3 overflow-x-auto">
                 <button onclick="showCategory('entradas')" class="cat-tab active text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="entradas">Entradas</button>
                 <button onclick="showCategory('fondos')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="fondos">Fondos</button>
                 <button onclick="showCategory('postres')" class="cat-tab text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest whitespace-nowrap hover:text-gold-500" data-cat="postres">Postres</button>
@@ -542,13 +542,16 @@
     </main>
 
     <!-- CTA Banner -->
-    <section class="py-20 bg-gradient-to-r from-gold-600 to-gold-500 relative overflow-hidden">
+    <section class="py-16 md:py-20 bg-[#0a0a0a] relative overflow-hidden border-t border-[#D4AF37]/10">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(202,138,4,0.04)_0%,transparent_70%)]"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6 fade-up">Listo para pedir?</h2>
-            <p class="text-white/80 text-lg mb-8 fade-up stagger-1">Escanea el QR, llama o haz tu pedido directo por WhatsApp.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up stagger-2">
-                <a href="https://wa.me/51933667414?text=%F0%9F%8D%BD%EF%B8%8F%20*Hola%20La%20Casona*%20Quisiera%20hacer%20un%20pedido." target="_blank" class="px-10 py-4 bg-black text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-black/80 transition-all shadow-xl btn-glow">Pedir por WhatsApp</a>
-                <a href="index.html#reserve" class="px-10 py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-white/30 transition-all">Reservar Mesa</a>
+            <span class="text-[#D4AF37] font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block fade-up">La Casona Gourmet</span>
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-4 fade-up">Listo para pedir?</h2>
+            <p class="text-stone-500 text-base md:text-lg mb-10 font-light fade-up">Haz tu pedido directo por WhatsApp o reserva tu mesa.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up">
+                <a href="https://wa.me/51933667414?text=%F0%9F%8D%BD%EF%B8%8F%20*Hola%20La%20Casona*%20Quisiera%20hacer%20un%20pedido." target="_blank" class="px-10 py-4 bg-gradient-to-r from-[#D4AF37] to-[#ca8a04] text-black rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:from-[#eab308] hover:to-[#D4AF37] transition-all shadow-lg shadow-[#D4AF37]/10 btn-glow">Pedir por WhatsApp</a>
+                <a href="index.html#reserve" class="px-10 py-4 bg-transparent border border-[#D4AF37]/30 text-[#D4AF37] rounded-full font-bold text-xs tracking-[0.15em] uppercase hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50 transition-all">Reservar Mesa</a>
             </div>
         </div>
     </section>
@@ -582,16 +585,16 @@
         function showCategory(cat) {
             document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-            document.getElementById('cat-' + cat).classList.add('active');
+            const section = document.getElementById('cat-' + cat);
+            section.classList.add('active');
             document.querySelector('[data-cat="' + cat + '"]').classList.add('active');
-            window.scrollTo({ top: document.querySelector('#cat-' + cat).offsetTop - 80, behavior: 'smooth' });
-            // Re-trigger animations for newly visible items
-            setTimeout(() => {
-                document.querySelectorAll('#cat-' + cat + ' .fade-up, #cat-' + cat + ' .fade-left, #cat-' + cat + ' .scale-in').forEach(el => {
-                    el.classList.remove('visible');
-                    observer.observe(el);
+            window.scrollTo({ top: section.offsetTop - 60, behavior: 'smooth' });
+            // Immediately show all animated children - no delay, no black flash
+            requestAnimationFrame(() => {
+                section.querySelectorAll('.fade-up, .fade-left, .fade-right, .scale-in').forEach(el => {
+                    el.classList.add('visible');
                 });
-            }, 300);
+            });
         }
 
         // WhatsApp order
